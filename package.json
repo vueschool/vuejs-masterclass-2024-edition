@@ -14,10 +14,10 @@
     "supabase:init": "supabase init",
     "supabase:login": "supabase login",
     "supabase:link": "supabase link --project-ref baavizkjepbcaklxvgvd",
-    "db:migrate:new": "supabase migration new projects-schema",
+    "supabase:types": "npx supabase gen types typescript --project-id baavizkjepbcaklxvgvd --schema public > database/types.ts",
+    "db:migrate:new": "supabase migration new",
     "db:reset": "supabase db reset --linked",
-    "db:seed": "node --env-file=.env database/seed.js",
-    "supabase:types": "npx supabase gen types typescript --project-id baavizkjepbcaklxvgvd --schema public > database/types.ts"
+    "db:seed": "node --env-file=.env database/seed.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.43.4",
