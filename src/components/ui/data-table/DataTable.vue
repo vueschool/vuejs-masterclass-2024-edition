@@ -49,7 +49,11 @@ const table = useVueTable({
             :data-state="row.getIsSelected() ? 'selected' : undefined"
           >
             <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
-              <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
+              <slot :name="`cell-${cell.column.id}`" :cell="cell">
+                {{ cell.getValue() }}
+              </slot>
+
+              <!-- <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" /> -->
             </TableCell>
           </TableRow>
         </template>
@@ -63,7 +67,7 @@ const table = useVueTable({
   </div>
 </template>
 
-<style scoped>
+<!-- <style scoped>
 td {
   @apply p-0;
 }
@@ -71,4 +75,4 @@ td {
 td > * {
   @apply p-4;
 }
-</style>
+</style> -->
