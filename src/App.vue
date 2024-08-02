@@ -1,28 +1,15 @@
-<script setup lang="ts">
-const MocComponent = defineComponent(async () => {
-  const greeting = ref('Hello')
-
-  await new Promise((resolve) => {
-    greeting.value = 'Hello from the database!'
-
-    setTimeout(() => {
-      resolve(true)
-    }, 1000)
-  })
-
-  return () => h('p', greeting.value)
-})
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <AuthLayout>
-    <Suspense>
-      <MocComponent />
+    <RouterView v-slot="{ Component, route }">
+      <Suspense v-if="Component" :timeout="0">
+        <Component :is="Component" :key="route.name"></Component>
 
-      <template #fallback>
-        <span>Loading ..</span>
-      </template>
-    </Suspense>
-    <!-- <RouterView /> -->
+        <template #fallback>
+          <span>Loading ..</span>
+        </template>
+      </Suspense>
+    </RouterView>
   </AuthLayout>
 </template>
