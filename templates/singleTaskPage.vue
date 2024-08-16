@@ -1,38 +1,17 @@
-<script setup lang="ts">
-import { taskQuery, type Task } from '@/utils/supaQueries'
-
-const route = useRoute('/tasks/[id]')
-
-const task = ref<Task | null>(null)
-
-watch(
-  () => task.value?.name,
-  () => {
-    usePageStore().pageData.title = `Task: ${task.value?.name || ''}`
-  }
-)
-
-const getTask = async () => {
-  const { data, error } = await taskQuery(route.params.id)
-
-  if (error) console.log(error)
-
-  task.value = data
-}
-
-await getTask()
-</script>
-
 <template>
-  <Table v-if="task">
+  <Table>
     <TableRow>
       <TableHead> Name </TableHead>
-      <TableCell> {{ task.name }} </TableCell>
+      <TableCell> Lorem ipsum dolor sit amet. </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Description </TableHead>
       <TableCell>
-        {{ task.description }}
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad iure qui tempora ex nihil, ab
+        reprehenderit dolorem sunt veritatis perferendis? Repudiandae quis velit quasi ab natus quia
+        ratione voluptas deserunt labore sed distinctio nam fuga fugit vero voluptates placeat
+        aperiam, saepe excepturi eos harum consectetur doloremque perspiciatis nesciunt! Incidunt,
+        modi.
       </TableCell>
     </TableRow>
     <TableRow>
@@ -41,11 +20,11 @@ await getTask()
     </TableRow>
     <TableRow>
       <TableHead> Project </TableHead>
-      <TableCell>{{ task.projects?.name }}</TableCell>
+      <TableCell> Lorem ipsum. </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Status </TableHead>
-      <TableCell>{{ task.status }}</TableCell>
+      <TableCell>In progress</TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Collaborators </TableHead>
@@ -53,8 +32,8 @@ await getTask()
         <div class="flex">
           <Avatar
             class="-mr-4 border border-primary hover:scale-110 transition-transform"
-            v-for="collab in task.collaborators"
-            :key="collab"
+            v-for="n in 5"
+            :key="n"
           >
             <RouterLink class="w-full h-full flex items-center justify-center" to="">
               <AvatarImage src="" alt="" />
