@@ -11,5 +11,5 @@ export const tasksWithProjectsQuery = supabase.from('tasks').select(`
   `)
 export type TasksWithProjects = QueryData<typeof tasksWithProjectsQuery>
 
-export const porjectsQuery = supabase.from('projects').select()
-export type Projects = QueryData<typeof porjectsQuery>
+export const projectsQuery = supabase.from('projects').select()
+export type Projects = QueryData<typeof projectsQuery>
