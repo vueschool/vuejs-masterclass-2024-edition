@@ -23,6 +23,7 @@ const accountLinks = [
     to: '/profile',
     icon: 'lucide:user'
   },
+
   {
     title: 'Settings',
     to: '/settings',
