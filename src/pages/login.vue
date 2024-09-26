@@ -15,7 +15,9 @@ const signin = async () => {
 </script>
 
 <template>
-  <div class="mx-auto flex w-full justify-center items-center p-10 text-center -mt-20 min-h-[90vh]">
+  <div
+    class="mx-auto flex w-full justify-center items-center p-10 text-center -mt-20 min-h-[90vh]"
+  >
     <Card class="max-w-sm w-full mx-auto">
       <CardHeader>
         <CardTitle class="text-2xl"> Login </CardTitle>
@@ -23,7 +25,9 @@ const signin = async () => {
       </CardHeader>
       <CardContent>
         <div class="flex flex-col gap-4 mb-4 justify-center items-center">
-          <Button variant="outline" class="w-full"> Register with Google </Button>
+          <Button variant="outline" class="w-full">
+            Register with Google
+          </Button>
           <Separator label="Or" />
         </div>
 
@@ -40,7 +44,9 @@ const signin = async () => {
           <div class="grid gap-2">
             <div class="flex items-center">
               <Label id="password">Password</Label>
-              <a href="#" class="inline-block ml-auto text-xs underline"> Forgot your password? </a>
+              <a href="#" class="inline-block ml-auto text-xs underline">
+                Forgot your password?
+              </a>
             </div>
             <Input
               id="password"
