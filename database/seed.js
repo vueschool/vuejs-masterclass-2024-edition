@@ -28,9 +28,9 @@ const logStep = (stepMessage) => {
 const PrimaryTestUserExists = async () => {
   logStep('Checking if primary test user exists...')
   const { data, error } = await supabase
-    .from('auth.users')
-    .select('id, email')
-    .eq('email', testingUserEmail)
+    .from('profiles')
+    .select('id, username')
+    .eq('username', 'testaccount1')
     .single()
 
   if (error) {
