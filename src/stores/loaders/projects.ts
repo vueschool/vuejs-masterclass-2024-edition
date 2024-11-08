@@ -3,22 +3,36 @@ import { useMemoize } from '@vueuse/core'
 import type { Project, Projects } from '@/utils/supaQueries'
 
 export const useProjectsStore = defineStore('projects-store', () => {
-  const projects = ref<Projects>([])
-  const project = ref<Project>()
+  const projects = ref<Projects | null>(null)
+  const project = ref<Project | null>(null)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const loadProjects = useMemoize(async (key: string) => await projectsQuery)
   const loadProject = useMemoize(
     async (slug: string) => await projectQuery(slug)
   )
 
-  const validateCache = () => {
-    if (projects.value?.length) {
-      projectsQuery.then(({ data, error }) => {
-        if (JSON.stringify(projects.value) === JSON.stringify(data)) {
+  interface ValidateCacheParams {
+    ref: typeof projects | typeof project
+    query: typeof projectsQuery | typeof projectQuery
+    key: string
+    loaderFn: typeof loadProjects | typeof loadProject
+  }
+
+  const validateCache = ({
+    ref,
+    query,
+    key,
+    loaderFn
+  }: ValidateCacheParams) => {
+    if (ref.value) {
+      const finalQuery = typeof query === 'function' ? query(key) : query
+
+      finalQuery.then(({ data, error }) => {
+        if (JSON.stringify(ref.value) === JSON.stringify(data)) {
           return
         } else {
-          loadProjects.delete('projects')
-          if (!error && data) projects.value = data
+          loaderFn.delete(key)
+          if (!error && data) ref.value = data
         }
       })
     }
@@ -31,7 +45,12 @@ export const useProjectsStore = defineStore('projects-store', () => {
 
     if (data) projects.value = data
 
-    validateCache()
+    validateCache({
+      ref: projects,
+      query: projectsQuery,
+      key: 'projects',
+      loaderFn: loadProjects
+    })
   }
 
   const getProject = async (slug: string) => {
@@ -40,6 +59,13 @@ export const useProjectsStore = defineStore('projects-store', () => {
     if (error) useErrorStore().setError({ error, customCode: status })
 
     if (data) project.value = data
+
+    validateCache({
+      ref: project,
+      query: projectQuery,
+      key: slug,
+      loaderFn: loadProject
+    })
   }
 
   return {
