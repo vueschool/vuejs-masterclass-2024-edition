@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { projectQuery } from '@/utils/supaQueries'
-import type { Project } from '@/utils/supaQueries'
+const { slug } = useRoute('/projects/[slug]').params
 
-const route = useRoute('/projects/[slug]')
-
-const project = ref<Project | null>(null)
+const projectsLoader = useProjectsStore()
+const { project } = storeToRefs(projectsLoader)
+const { getProject } = projectsLoader
 
 watch(
   () => project.value?.name,
@@ -13,15 +12,7 @@ watch(
   }
 )
 
-const getProjects = async () => {
-  const { data, error, status } = await projectQuery(route.params.slug)
-
-  if (error) useErrorStore().setError({ error, customCode: status })
-
-  project.value = data
-}
-
-await getProjects()
+await getProject(slug)
 </script>
 
 <template>
@@ -49,7 +40,10 @@ await getProjects()
             v-for="collab in project.collaborators"
             :key="collab"
           >
-            <RouterLink class="w-full h-full flex items-center justify-center" to="">
+            <RouterLink
+              class="w-full h-full flex items-center justify-center"
+              to=""
+            >
               <AvatarImage src="" alt="" />
               <AvatarFallback> </AvatarFallback>
             </RouterLink>
@@ -59,7 +53,10 @@ await getProjects()
     </TableRow>
   </Table>
 
-  <section v-if="project" class="mt-10 flex flex-col md:flex-row gap-5 justify-between grow">
+  <section
+    v-if="project"
+    class="mt-10 flex flex-col md:flex-row gap-5 justify-between grow"
+  >
     <div class="flex-1">
       <h2>Tasks</h2>
       <div class="table-container">
