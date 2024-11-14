@@ -6,6 +6,7 @@ import type { GroupedCollabs } from '@/types/GroupedCollabs'
 import Avatar from '@/components/ui/avatar/Avatar.vue'
 import AvatarImage from '@/components/ui/avatar/AvatarImage.vue'
 import AvatarFallback from '@/components/ui/avatar/AvatarFallback.vue'
+import AppInPlaceEditStatus from '@/components/AppInPlaceEdit/AppInPlaceEditStatus.vue'
 
 export const columns = (
   collabs: Ref<GroupedCollabs>
@@ -31,7 +32,7 @@ export const columns = (
       return h(
         'div',
         { class: 'text-left font-medium' },
-        row.getValue('status')
+        h(AppInPlaceEditStatus, { modelValue: row.original.status })
       )
     }
   },
