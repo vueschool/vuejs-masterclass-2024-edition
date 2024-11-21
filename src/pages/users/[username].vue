@@ -4,6 +4,8 @@ import type { Tables } from 'database/types'
 
 const { username } = useRoute('/users/[username]').params
 
+usePageStore().pageData.title = ''
+
 const profile = ref<Tables<'profiles'> | null>(null)
 const getTasks = async () => {
   const { data, error, status } = await profileQuery({
