@@ -37,21 +37,13 @@ export type Database = {
           mode?: string
           username?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       projects: {
         Row: {
           collaborators: string[]
           created_at: string
-          description: string | null
+          description: string
           id: number
           name: string
           slug: string
@@ -60,7 +52,7 @@ export type Database = {
         Insert: {
           collaborators?: string[]
           created_at?: string
-          description?: string | null
+          description?: string
           id?: never
           name: string
           slug: string
@@ -69,7 +61,7 @@ export type Database = {
         Update: {
           collaborators?: string[]
           created_at?: string
-          description?: string | null
+          description?: string
           id?: never
           name?: string
           slug?: string
@@ -85,6 +77,7 @@ export type Database = {
           due_date: string | null
           id: number
           name: string
+          profile_id: string
           project_id: number | null
           status: Database["public"]["Enums"]["current_status"]
         }
@@ -95,6 +88,7 @@ export type Database = {
           due_date?: string | null
           id?: never
           name: string
+          profile_id: string
           project_id?: number | null
           status?: Database["public"]["Enums"]["current_status"]
         }
@@ -105,10 +99,18 @@ export type Database = {
           due_date?: string | null
           id?: never
           name?: string
+          profile_id?: string
           project_id?: number | null
           status?: Database["public"]["Enums"]["current_status"]
         }
         Relationships: [
+          {
+            foreignKeyName: "tasks_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "tasks_project_id_fkey"
             columns: ["project_id"]
@@ -214,4 +216,19 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
     ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof PublicSchema["CompositeTypes"]
+    | { schema: keyof Database },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
+    ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never

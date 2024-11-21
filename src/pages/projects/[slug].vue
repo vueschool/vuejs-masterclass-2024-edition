@@ -32,7 +32,8 @@ const collabs = project.value?.collaborators
     <TableRow>
       <TableHead> Description </TableHead>
       <TableCell>
-        <AppInPlaceEditText
+        <AppInPlaceEditTextarea
+          class="h-20"
           v-model="project.description"
           @commit="updateProject"
         />
