@@ -60,6 +60,10 @@ export const updateTaskQuery = (updatedTask = {}, id: number) => {
   return supabase.from('tasks').update(updatedTask).eq('id', id)
 }
 
+export const deleteTaskQuery = (id: number) => {
+  return supabase.from('tasks').delete().eq('id', id)
+}
+
 export const profileQuery = ({
   column,
   value
