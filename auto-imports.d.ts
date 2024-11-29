@@ -66,6 +66,7 @@ declare global {
   const useId: typeof import('vue')['useId']
   const useLink: typeof import('vue-router')['useLink']
   const useMenu: typeof import('./src/composables/manu')['useMenu']
+  const useMeta: typeof import('vue-meta')['useMeta']
   const useModel: typeof import('vue')['useModel']
   const usePageStore: typeof import('./src/stores/page')['usePageStore']
   const useProjectsStore: typeof import('./src/stores/loaders/projects')['useProjectsStore']

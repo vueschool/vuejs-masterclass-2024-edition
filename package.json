@@ -33,6 +33,7 @@
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "vue": "^3.5.12",
+    "vue-meta": "^3.0.0-alpha.10",
     "vue-router": "^4.4.0"
   },
   "devDependencies": {
