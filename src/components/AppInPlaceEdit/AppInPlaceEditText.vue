@@ -10,6 +10,6 @@ defineEmits(['commit'])
     type="text"
     v-model="value"
     @blur="$emit('commit')"
-    @keypress.enter="($event.target as HTMLInputElement).blur()"
+    @keyup.enter="($event.target as HTMLInputElement).blur()"
   />
 </template>
